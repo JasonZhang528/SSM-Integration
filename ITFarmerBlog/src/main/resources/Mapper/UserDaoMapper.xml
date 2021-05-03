@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+Mapper根节点；namespace指Dao接口的全路径
+一个mapper文件对应一个不同的明明空间，利于后期管理和维护
+-->
+<mapper namespace="com.ITFarmerBlog.Dao.UserDao">
+    <!--结果集映射-->
+    <resultMap type="com.ITFarmerBlog.Entity.User" id="user">
+        <id column="id" property="id"/>
+        <!--column是表中字段名称，property是实体类的属性名(注：只需要映射不一样的字段，一样的字段可以省略)-->
+        <result column="user_id" property="uid"/>
+        <result column="user_name" property="username"/>
+        <result column="user_password" property="password"/>
+        <result column="user_permissions" property="permissions"/>
+        <result column="user_ip" property="uip"/>
+        <result column="user_nickname" property="nickname"/>
+        <result column="user_email" property="email"/>
+        <result column="user_phone" property="phone"/>
+        <result column="user_profile_photo" property="profile_photo"/>
+        <result column="user_register_time" property="register_time"/>
+        <result column="user_birthday" property="birthday"/>
+
+    </resultMap>
+
+    <select id="getUser" resultMap="user">
+        select * from tb_users
+    </select>
+
+    <insert id="insertUser" parameterType="com.ITFarmerBlog.Entity.User">
+        insert into tb_users(user_id,user_name,user_password,user_permissions,user_ip,user_nickname,user_email,user_phone,
+                             user_profile_photo,user_register_time,user_birthday) values (#{uid},#{username},#{password},
+                            #{permissions},#{uip},#{nickname},#{email},#{phone},#{profile_photo},#{register_time},#{birthday})
+    </insert>
+</mapper>

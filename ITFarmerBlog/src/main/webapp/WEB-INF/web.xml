@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <display-name>Archetype Created Web Application</display-name>
+
+    <!--1、配置监听器ContextLoaderListener-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!--2、启动Spring容器-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+
+    <!--3、配置前端控制器(Servlet请求分发器)：dispatcherServlet-->
+    <servlet>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--加载spring-mvc.xml文件-->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <!--标记容器是否在启动的时候就加载这个servlet.
+            当值为0或者大于0时，表示容器在应用启动时就加载这个servlet；
+            当是一个负数时或者没有指定时，则指示容器在该servlet被选择时才加载。
+            正数的值越小，启动该servlet的优先级越高。-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!--4、设置前端控制器拦截内容-->
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <!--会拦截URL中带“/”的请求-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!--5、编码过滤UTF-8，避免中文乱码-->
+    <filter>
+        <description>char encoding filter</description>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <!--6、设置编码过滤的拦截内容-->
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+</web-app>
